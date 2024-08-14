@@ -20,11 +20,13 @@ jobs:
         with:
           gradle-version: 8.7
 
-      - run: app/gradlew checkstyleMain
+      - run: ./gradlew checkstyleMain
         name: Run checkstyle
+        working-directory: app
 
-      - run: app/gradlew test
+      - run: ./gradlew test
         name: Run tests
+        working-directory: app
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
