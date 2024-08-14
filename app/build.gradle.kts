@@ -3,6 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
 	application
+	jacoco
 	id("org.springframework.boot") version "3.3.2"
 	id("io.spring.dependency-management") version "1.1.6"
 	id("com.github.ben-manes.versions") version "0.50.0"
@@ -32,7 +33,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	compileOnly("org.projectlombok:lombok")
-	//developmentOnly("org.springframework.boot:spring-boot-devtools")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -51,7 +52,12 @@ dependencies {
 	implementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
 	implementation("net.datafaker:datafaker:2.0.2")
 
-	runtimeOnly("com.h2database:h2:2.2.224")
+	runtimeOnly ("org.postgresql:postgresql")
+	runtimeOnly ("com.h2database:h2")
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
 }
 
 tasks.test {
@@ -64,4 +70,5 @@ tasks.test {
 		// showCauses = true
 		showStandardStreams = true
 	}
+	finalizedBy(tasks.jacocoTestReport)
 }
