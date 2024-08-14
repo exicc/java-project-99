@@ -8,6 +8,8 @@ logging:
         security: DEBUG
 
 spring:
+  profiles:
+    active: development
   jpa:
     generate-ddl: true
     show-sql: true
