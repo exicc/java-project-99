@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -yq make unzip && rm -rf /var/lib/apt/list
 
 WORKDIR /backend
 
+COPY config/checkstyle/checkstyle.xml config/checkstyle/
 COPY gradlew .
 COPY gradle/ gradle/
 COPY build.gradle.kts .
