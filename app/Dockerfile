@@ -1,15 +1,15 @@
 # Этап сборки frontend
-FROM node:20.6.1 AS frontend
+#FROM node:20.6.1 AS frontend
 
-WORKDIR /frontend
+#WORKDIR /frontend
 
-COPY frontend/package*.json ./
+#COPY frontend/package*.json ./
 
-RUN npm ci
+#RUN npm ci
 
-COPY frontend/ .
+#COPY frontend/ .
 
-RUN npm run build
+#RUN npm run build
 
 FROM eclipse-temurin:21-jdk
 
@@ -27,7 +27,7 @@ RUN ./gradlew --no-daemon dependencies
 COPY lombok.config .
 COPY src/ src/
 
-COPY --from=frontend /frontend/dist /backend/src/main/resources/static
+#COPY --from=frontend /frontend/dist /backend/src/main/resources/static
 
 RUN ./gradlew --no-daemon build
 
