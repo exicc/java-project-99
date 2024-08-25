@@ -40,6 +40,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation ("org.assertj:assertj-core:3.24.2")
+	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.4.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
