@@ -52,7 +52,7 @@ public class UsersController {
     }
 
     @GetMapping("/users/{id}")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.OK)
     public UserDTO show(@PathVariable Long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));

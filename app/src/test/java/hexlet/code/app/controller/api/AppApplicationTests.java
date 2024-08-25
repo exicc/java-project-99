@@ -22,9 +22,11 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -121,14 +123,19 @@ class AppApplicationTests {
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
-        var expectedJson = objectMapper.writeValueAsString(userMapper.map(testUser));
-        assertThat(body).isEqualTo(expectedJson);
+        assertThatJson(body).and(
+                v -> v.node("id").isEqualTo(testUser.getId()),
+                v -> v.node("firstName").isEqualTo(testUser.getFirstName()),
+                v -> v.node("lastName").isEqualTo(testUser.getLastName()),
+                v -> v.node("email").isEqualTo(testUser.getEmail()),
+                v -> v.node("password").isEqualTo(testUser.getPassword())
+        );
     }
 
     @Test
     public void testDelete() throws Exception {
         userRepository.save(testUser);
-        var request = get("/api/users/" + testUser.getId());
+        var request = delete("/api/users/" + testUser.getId());
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
