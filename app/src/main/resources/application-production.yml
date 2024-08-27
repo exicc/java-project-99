@@ -6,3 +6,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+rsa:
+  private-key: file:/etc/secrets/private.pem
+  public-key: file:/etc/secrets/public.pem
