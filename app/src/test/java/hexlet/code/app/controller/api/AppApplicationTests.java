@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -44,11 +45,14 @@ class AppApplicationTests {
     @Autowired
     private Faker faker;
 
-    private User testUser;
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private User testUser;
 
     @BeforeEach
     public void setUp() {
@@ -57,9 +61,8 @@ class AppApplicationTests {
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .supply(Select.field(User::getLastName), () -> faker.name().lastName())
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
+                .supply(Select.field(User::getPassword), () -> passwordEncoder.encode(faker.internet().password()))
                 .create();
-
-
     }
 
     @Test
@@ -127,8 +130,7 @@ class AppApplicationTests {
                 v -> v.node("id").isEqualTo(testUser.getId()),
                 v -> v.node("firstName").isEqualTo(testUser.getFirstName()),
                 v -> v.node("lastName").isEqualTo(testUser.getLastName()),
-                v -> v.node("email").isEqualTo(testUser.getEmail()),
-                v -> v.node("password").isEqualTo(testUser.getPassword())
+                v -> v.node("email").isEqualTo(testUser.getEmail())
         );
     }
 
