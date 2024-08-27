@@ -12,11 +12,11 @@ public class UserUpdateDTO {
     private JsonNullable<String> email;
 
     @NotNull
-    private String firstName;
+    private JsonNullable<String> firstName;
 
     @NotNull
-    private String lastName;
+    private JsonNullable<String> lastName;
 
     @NotNull
-    private String password;
+    private JsonNullable<String> password;
 }
