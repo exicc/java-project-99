@@ -38,4 +38,3 @@ out/
 .vscode/
 
 /app/src/main/generated/
-/app/src/main/resources/certs/

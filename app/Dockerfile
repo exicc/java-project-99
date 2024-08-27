@@ -23,6 +23,9 @@ COPY gradle/ gradle/
 COPY build.gradle.kts .
 COPY settings.gradle.kts .
 
+COPY src/main/resources/certs/private.pem certs/
+COPY src/main/resources/certs/public.pem certs/
+
 RUN ./gradlew --no-daemon dependencies
 
 COPY lombok.config .

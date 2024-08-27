@@ -8,5 +8,5 @@ spring:
       ddl-auto: update
 
 rsa:
-  private-key: file:/etc/secrets/private.pem
-  public-key: file:/etc/secrets/public.pem
+  private-key: /certs/private.pem
+  public-key: /certs/public.pem
