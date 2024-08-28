@@ -29,7 +29,7 @@ public class UserInitializerConfig {
             if (!userRepository.existsByEmail(email)) {
                 User user = new User();
                 user.setEmail(email);
-                user.setPassword(passwordEncoder.encode("qwerty"));
+                user.setPasswordDigest(passwordEncoder.encode("qwerty"));
                 userRepository.save(user);
             }
         };

@@ -44,13 +44,18 @@ public class User implements BaseEntity, UserDetails {
     private String email;
 
     @NotBlank
-    private String password;
+    private String passwordDigest;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @Override
+    public String getPassword() {
+        return passwordDigest;
+    }
 
     @Override
     public String getUsername() {
