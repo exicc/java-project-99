@@ -29,8 +29,7 @@ public class UserInitializerConfig {
             if (!userRepository.existsByEmail(email)) {
                 User user = new User();
                 user.setEmail(email);
-                String rawPassword = "qwerty";
-                String encodedPassword = passwordEncoder.encode(rawPassword);
+                String encodedPassword = passwordEncoder.encode("qwerty");
                 user.setPasswordDigest(encodedPassword);
                 userRepository.save(user);
             }
