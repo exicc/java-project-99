@@ -1,15 +1,12 @@
-# Этап сборки frontend
-#FROM node:20.6.1 AS frontend
+FROM node:20 AS frontend-build
 
-#WORKDIR /frontend
+WORKDIR /app
 
-#COPY frontend/package*.json ./
+COPY package*.json ./
 
-#RUN npm ci
+RUN npm install @hexlet/java-task-manager-frontend
 
-#COPY frontend/ .
-
-#RUN npm run build
+RUN npx build-frontend
 
 FROM eclipse-temurin:21-jdk
 
@@ -18,20 +15,20 @@ RUN apt-get update && apt-get install -yq make unzip && rm -rf /var/lib/apt/list
 WORKDIR /backend
 
 COPY config/checkstyle/checkstyle.xml config/checkstyle/
-COPY gradlew .
+COPY gradlew ./
 COPY gradle/ gradle/
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
+COPY build.gradle.kts ./
+COPY settings.gradle.kts ./
 
 COPY src/main/resources/certs/private.pem certs/
 COPY src/main/resources/certs/public.pem certs/
 
 RUN ./gradlew --no-daemon dependencies
 
-COPY lombok.config .
+COPY lombok.config ./
 COPY src/ src/
 
-#COPY --from=frontend /frontend/dist /backend/src/main/resources/static
+COPY --from=frontend-build /app /backend
 
 RUN ./gradlew --no-daemon build
 

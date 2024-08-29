@@ -9,6 +9,7 @@ import hexlet.code.app.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +34,14 @@ public class UsersController {
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDTO> index() {
+    ResponseEntity<List<UserDTO>> index() {
         var users = userRepository.findAll();
         var result = users.stream()
                 .map(userMapper::map)
                 .toList();
-
-        return result;
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(users.size()))
+                .body(result);
     }
 
     @PostMapping("/users")
