@@ -30,7 +30,6 @@ public class UserInitializerConfig {
                 User user = new User();
                 String rawPassword = "qwerty";
                 String encodedPassword = passwordEncoder.encode(rawPassword);
-                System.out.println("Encoded password: " + encodedPassword); // Log the encoded password
                 user.setPasswordDigest(encodedPassword);
                 userRepository.save(user);
             }
