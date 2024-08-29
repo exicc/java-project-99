@@ -28,8 +28,10 @@ public class UserInitializerConfig {
             String email = "hexlet@example.com";
             if (!userRepository.existsByEmail(email)) {
                 User user = new User();
-                user.setEmail(email);
-                user.setPasswordDigest(passwordEncoder.encode("qwerty"));
+                String rawPassword = "qwerty";
+                String encodedPassword = passwordEncoder.encode(rawPassword);
+                System.out.println("Encoded password: " + encodedPassword); // Log the encoded password
+                user.setPasswordDigest(encodedPassword);
                 userRepository.save(user);
             }
         };
