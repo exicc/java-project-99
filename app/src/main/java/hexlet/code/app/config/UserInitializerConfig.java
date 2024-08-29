@@ -28,6 +28,7 @@ public class UserInitializerConfig {
             String email = "hexlet@example.com";
             if (!userRepository.existsByEmail(email)) {
                 User user = new User();
+                user.setEmail(email);
                 String rawPassword = "qwerty";
                 String encodedPassword = passwordEncoder.encode(rawPassword);
                 user.setPasswordDigest(encodedPassword);
