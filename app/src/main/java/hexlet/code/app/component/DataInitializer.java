@@ -1,6 +1,7 @@
 package hexlet.code.app.component;
 
 import hexlet.code.app.model.User;
+import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.service.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,21 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements ApplicationRunner {
 
     @Autowired
-    private final CustomUserDetailsService userService;
+    private CustomUserDetailsService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         var email = "hexlet@example.com";
-        var userData = new User();
-        userData.setEmail(email);
-        userData.setPasswordDigest("qwerty");
-        userService.createUser(userData);
+        var existingUser = userRepository.findByEmail(email);
+        if (existingUser.isEmpty()) {
+            var userData = new User();
+            userData.setEmail(email);
+            userData.setPasswordDigest("qwerty");
+            userService.createUser(userData);
+        }
         /*var user = userRepository.findByEmail(email).get();
 
         var faker = new Faker();
