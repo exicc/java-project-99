@@ -72,7 +72,7 @@ public class UsersController {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
 
-        if (userData.getPassword().isPresent()) {
+        if (userData.getPassword() != null && userData.getPassword().isPresent()) {
         String encodedPassword = passwordEncoder.encode(userData.getPassword().get());
         user.setPasswordDigest(encodedPassword);
     }
