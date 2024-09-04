@@ -42,7 +42,6 @@ public class User implements BaseEntity, UserDetails {
     private String lastName;
 
     @Email
-    @Column(unique = true, nullable = false)
     private String email;
 
     @NotBlank
