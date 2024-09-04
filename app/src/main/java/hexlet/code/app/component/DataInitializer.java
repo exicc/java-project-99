@@ -23,13 +23,15 @@ public class DataInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         var email = "hexlet@example.com";
-        var existingUser = userRepository.findByEmail(email);
-        if (existingUser.isEmpty()) {
-            var userData = new User();
-            userData.setEmail(email);
-            userData.setPasswordDigest("qwerty");
-            userService.createUser(userData);
+        var user = userRepository.findByEmail(email);
+
+        if (user.isPresent()) {
+            userRepository.deleteAllByEmailSQL(email);
         }
+        var userData = new User();
+        userData.setEmail(email);
+        userData.setPasswordDigest("qwerty");
+        userService.createUser(userData);
         /*var user = userRepository.findByEmail(email).get();
 
         var faker = new Faker();
