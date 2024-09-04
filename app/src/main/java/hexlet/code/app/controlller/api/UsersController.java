@@ -71,6 +71,11 @@ public class UsersController {
     public UserDTO update(@Valid @RequestBody UserUpdateDTO userData, @PathVariable Long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+
+        if (userData.getPassword().isPresent()) {
+        String encodedPassword = passwordEncoder.encode(userData.getPassword().get());
+        user.setPasswordDigest(encodedPassword);
+    }
         userMapper.updateEntity(userData, user);
         userRepository.save(user);
         var userDTO = userMapper.map(user);
