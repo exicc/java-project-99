@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${HOST}:${DB_PORT}/${DATABASE}?password=${PASSWORD}&user=${USERNAME}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+rsa:
+  private-key: /certs/private.pem
+  public-key: /certs/public.pem
