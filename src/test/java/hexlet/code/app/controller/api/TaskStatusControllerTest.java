@@ -1,9 +1,7 @@
 package hexlet.code.app.controller.api;
 
-import hexlet.code.app.controlller.api.TaskStatusController;
 import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.repository.TaskStatusRepository;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,13 +18,14 @@ import org.springframework.security.test.web.servlet.request
 import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Test class for the {@link TaskStatusController}
- */
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TaskStatusControllerTest {
@@ -46,8 +45,8 @@ public class TaskStatusControllerTest {
 
         String dto = """
                 {
-                	"name": "Mike",
-                	"slug": "Logan"
+                    "name": "Mike",
+                    "slug": "Logan"
                 }""";
 
         mockMvc.perform(post("/api/task_statuses")
@@ -68,8 +67,8 @@ public class TaskStatusControllerTest {
     public void createTest() throws Exception {
         String dto = """
                 {
-                	"name": "George",
-                	"slug": "Princeton"
+                    "name": "George",
+                    "slug": "Princeton"
                 }""";
 
         mockMvc.perform(post("/api/task_statuses")
@@ -105,8 +104,8 @@ public class TaskStatusControllerTest {
     public void updateTest() throws Exception {
         String taskData = """
                 {
-                	"name": "ewq",
-                	"slug": "ewq"
+                    "name": "ewq",
+                    "slug": "ewq"
                 }""";
         String id = lastTaskStatusID;
 
