@@ -37,9 +37,8 @@ out/
 ### VS Code ###
 .vscode/
 
-/app/src/main/generated/
-src/main/resources/static
-!src/main/resources/static/.gitkeep
+/src/main/resources/static
+!/src/main/resources/static/.gitkeep
 
 # Logs
 logs
@@ -66,3 +65,4 @@ dist-ssr
 *.sw?
 
 amplicode.xml
+/src/main/generated/
