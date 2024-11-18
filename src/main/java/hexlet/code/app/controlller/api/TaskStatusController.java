@@ -37,12 +37,14 @@ public class TaskStatusController {
 
 
     @GetMapping("/task_statuses")
+    @ResponseStatus(HttpStatus.OK)
     public Page<TaskStatusDTO> getList(@ParameterObject Pageable pageable) {
         Page<TaskStatus> taskStatuses = taskStatusRepository.findAll(pageable);
         return taskStatuses.map(taskStatusMapper::toDto);
     }
 
     @GetMapping("task_statuses/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public TaskStatusDTO getOne(@PathVariable Long id) {
         Optional<TaskStatus> taskStatusOptional = taskStatusRepository.findById(id);
         return taskStatusMapper.toDto(taskStatusOptional.orElseThrow(() ->
@@ -50,6 +52,7 @@ public class TaskStatusController {
     }
 
     @PostMapping("/task_statuses")
+    @ResponseStatus(HttpStatus.CREATED)
     public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO dto) {
         TaskStatus taskStatus = taskStatusMapper.toEntity(dto);
         TaskStatus resultTaskStatus = taskStatusRepository.save(taskStatus);
@@ -59,7 +62,7 @@ public class TaskStatusController {
     @PutMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TaskStatusDTO update(@Valid @RequestBody TaskStatusUpdateDTO taskData, @PathVariable Long id) {
-        var task = taskStatusRepository.findBySlug(String.valueOf(taskData.getSlug()))
+        var task = taskStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
 
         taskStatusMapper.partialUpdate(taskData, task);
@@ -68,6 +71,7 @@ public class TaskStatusController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public TaskStatusDTO delete(@PathVariable Long id) {
         TaskStatus taskStatus = taskStatusRepository.findById(id).orElse(null);
         if (taskStatus != null) {
