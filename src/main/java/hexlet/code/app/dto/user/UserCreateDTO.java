@@ -1,16 +1,16 @@
-package hexlet.code.app.dto;
+package hexlet.code.app.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class UserDTO {
-    private Long id;
+public class UserCreateDTO {
     private String email;
+
     private String firstName;
+
     private String lastName;
-    private LocalDateTime createdAt;
+
+    private String password;
 }

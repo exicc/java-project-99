@@ -1,4 +1,4 @@
-package hexlet.code.app.dto;
+package hexlet.code.app.dto.taskStatus;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -7,9 +7,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-/**
- * DTO for {@link hexlet.code.app.model.TaskStatus}
- */
+
 @AllArgsConstructor
 @Getter
 public class TaskStatusDTO {

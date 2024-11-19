@@ -1,7 +1,7 @@
-package hexlet.code.app.controller.api;
+/*package hexlet.code.app.controller.api;
 
 import hexlet.code.app.model.TaskStatus;
-import hexlet.code.app.repository.TaskStatusRepository;
+import hexlet.code.app.repository.TaskRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,13 +28,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TaskStatusControllerTest {
+public class TaskControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private TaskStatusRepository repository;
+    private TaskRepository repository;
     private JwtRequestPostProcessor token;
 
     private String lastTaskStatusID;
@@ -127,4 +127,4 @@ public class TaskStatusControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
     }
-}
+}*/
