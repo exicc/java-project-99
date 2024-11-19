@@ -1,7 +1,9 @@
 /*package hexlet.code.app.controller.api;
 
+import hexlet.code.app.model.Task;
 import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.repository.TaskRepository;
+import net.datafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,19 +37,19 @@ public class TaskControllerTest {
 
     @Autowired
     private TaskRepository repository;
+
+    @Autowired
+    private Faker faker;
+
     private JwtRequestPostProcessor token;
 
-    private String lastTaskStatusID;
+    private String lastTaskID;
 
     @BeforeEach
     public void setup() throws Exception {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
 
-        String dto = """
-                {
-                    "name": "Mike",
-                    "slug": "Logan"
-                }""";
+
 
         mockMvc.perform(post("/api/task_statuses")
                         .content(dto)
