@@ -56,7 +56,7 @@ public class TaskControllerTest {
     private String lastTaskStatusId;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     @Transactional

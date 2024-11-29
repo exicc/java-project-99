@@ -40,8 +40,8 @@ public interface TaskMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
-    @Mapping(target = "index"
-            , expression = "java(taskUpdateDTO.getIndex() != null ? taskUpdateDTO.getIndex().orElse(null) : null)")
+    @Mapping(target = "index",
+            expression = "java(taskUpdateDTO.getIndex() != null ? taskUpdateDTO.getIndex().orElse(null) : null)")
     @Mapping(target = "taskStatus", ignore = true)
     @Mapping(target = "assignee", ignore = true)
     void partialUpdate(TaskUpdateDTO taskUpdateDTO, @MappingTarget Task task);
