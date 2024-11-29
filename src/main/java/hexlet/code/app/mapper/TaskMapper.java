@@ -4,7 +4,13 @@ import hexlet.code.app.dto.task.TaskCreateDTO;
 import hexlet.code.app.dto.task.TaskDTO;
 import hexlet.code.app.dto.task.TaskUpdateDTO;
 import hexlet.code.app.model.Task;
-import org.mapstruct.*;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(
         uses = { JsonNullableMapper.class, ReferenceMapper.class },
@@ -27,15 +33,15 @@ public interface TaskMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "taskStatus", ignore = true)
-    @Mapping(target = "assignee", ignore = true)
+    @Mapping(target = "taskStatus.id", source = "taskStatusId")
+    @Mapping(target = "assignee.id", source = "assigneeId")
     Task toEntity(TaskCreateDTO taskCreateDTO);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
-    @Mapping(target = "index", expression = "java(taskUpdateDTO.getIndex().orElse(null))")
+    @Mapping(target = "index"
+            , expression = "java(taskUpdateDTO.getIndex() != null ? taskUpdateDTO.getIndex().orElse(null) : null)")
     @Mapping(target = "taskStatus", ignore = true)
     @Mapping(target = "assignee", ignore = true)
     void partialUpdate(TaskUpdateDTO taskUpdateDTO, @MappingTarget Task task);
