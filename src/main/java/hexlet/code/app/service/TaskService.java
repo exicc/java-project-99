@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TaskService {
@@ -28,8 +30,11 @@ public class TaskService {
 
     private final UserRepository userRepository;
 
-    public Page<TaskDTO> getAllTasks(Pageable pageable) {
-        return taskRepository.findAll(pageable).map(taskMapper::toDTO);
+    public List<TaskDTO> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+        return tasks.stream()
+                .map(taskMapper::toDTO)
+                .toList();
     }
 
     public TaskDTO getTaskById(Long id) {

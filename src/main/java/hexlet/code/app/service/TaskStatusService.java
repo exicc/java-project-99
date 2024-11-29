@@ -10,9 +10,9 @@ import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TaskStatusService {
@@ -26,9 +26,11 @@ public class TaskStatusService {
     @Autowired
     private TaskStatusMapper taskStatusMapper;
 
-    public Page<TaskStatusDTO> getAll(Pageable pageable) {
-        Page<TaskStatus> statuses = taskStatusRepository.findAll(pageable);
-        return statuses.map(taskStatusMapper::toDto);
+    public List<TaskStatusDTO> getAll() {
+        List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
+        return taskStatuses.stream()
+                .map(taskStatusMapper::toDto)
+                .toList();
     }
 
     public TaskStatusDTO getById(Long id) {

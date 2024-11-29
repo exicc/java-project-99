@@ -10,6 +10,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 @RestController
@@ -30,8 +33,11 @@ public class TaskStatusController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<TaskStatusDTO> getList(@ParameterObject Pageable pageable) {
-        return taskStatusService.getAll(pageable);
+    public ResponseEntity<List<TaskStatusDTO>> getList() {
+        List<TaskStatusDTO> taskStatuses = taskStatusService.getAll();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(taskStatuses.size()))
+                .body(taskStatuses);
     }
 
     @GetMapping("/{id}")
