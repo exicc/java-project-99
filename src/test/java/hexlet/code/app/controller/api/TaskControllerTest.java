@@ -65,8 +65,12 @@ public class TaskControllerTest {
 
         String email = "hexlet@example.com";
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("User with email "
-                        + email + " not found. | Test suite"));
+                .orElseGet(() -> {
+                    User newUser = new User();
+                    newUser.setEmail(email);
+                    newUser.setPasswordDigest("password");
+                    return userRepository.save(newUser);
+                });
 
         String slug = "draft";
         TaskStatus taskStatus = taskStatusRepository.getBySlug(slug)
