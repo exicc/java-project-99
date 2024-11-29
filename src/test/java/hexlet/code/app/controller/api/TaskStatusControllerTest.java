@@ -54,7 +54,7 @@ public class TaskStatusControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(token))
                 .andDo(print());
-        Optional<TaskStatus> lastTaskStatus = repository.findBySlug("Logan");
+        Optional<TaskStatus> lastTaskStatus = repository.getBySlug("Logan");
         lastTaskStatusID = lastTaskStatus.get().getId().toString();
     }
     @AfterEach
