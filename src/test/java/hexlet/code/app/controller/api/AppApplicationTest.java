@@ -37,7 +37,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AppApplicationTests {
+class AppApplicationTest {
 
     @Autowired
     private WebApplicationContext wac;

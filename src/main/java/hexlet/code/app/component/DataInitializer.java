@@ -49,17 +49,5 @@ public class DataInitializer implements ApplicationRunner {
                 taskStatusRepository.save(newStatus);
             }
         }
-        /*var user = userRepository.findByEmail(email).get();
-
-        var faker = new Faker();
-        IntStream.range(1, 10).forEach(i -> {
-            var post = new Post();
-            post.setName(faker.book().title());
-            var paragraphs = faker.lorem().paragraphs(5);
-            post.setBody(String.join("\n", paragraphs));
-            post.setSlug(faker.internet().slug());
-            post.setAuthor(user);
-            postRepository.save(post);
-        });*/
     }
 }
