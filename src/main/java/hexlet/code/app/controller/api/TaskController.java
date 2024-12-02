@@ -1,4 +1,4 @@
-package hexlet.code.app.controlller.api;
+package hexlet.code.app.controller.api;
 
 import hexlet.code.app.dto.task.TaskCreateDTO;
 import hexlet.code.app.dto.task.TaskDTO;
