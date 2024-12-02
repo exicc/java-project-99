@@ -30,5 +30,5 @@ public interface LabelMapper {
 
     @InheritConfiguration(name = "toEntity")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Label partialUpdate(LabelUpdateDTO DTO, @MappingTarget Label label);
+    Label partialUpdate(LabelUpdateDTO dto, @MappingTarget Label label);
 }

@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "labels")
 @EntityListeners(AuditingEntityListener.class)
-public class Label implements BaseEntity{
+public class Label implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
