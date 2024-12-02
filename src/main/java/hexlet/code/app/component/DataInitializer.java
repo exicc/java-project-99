@@ -1,7 +1,9 @@
 package hexlet.code.app.component;
 
+import hexlet.code.app.model.Label;
 import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.model.User;
+import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.service.CustomUserDetailsService;
@@ -27,8 +29,16 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
+    private final LabelRepository labelRepository;
+
     @Override
     public void run(ApplicationArguments args) {
+
+        createStartUsers();
+        createStartTaskStatuses();
+        createStartLabels();
+    }
+    private void createStartUsers() {
         var email = "hexlet@example.com";
         var user = userRepository.findByEmail(email);
 
@@ -39,7 +49,8 @@ public class DataInitializer implements ApplicationRunner {
         userData.setEmail(email);
         userData.setPasswordDigest("qwerty");
         userService.createUser(userData);
-
+    }
+    private void createStartTaskStatuses() {
         List<String> initialStatuses = List.of("DRAFT", "TO_REVIEW", "TO_BE_FIXED", "TO_PUBLISH", "PUBLISHED");
         for (String status : initialStatuses) {
             if (!taskStatusRepository.existsByName(status)) {
@@ -47,6 +58,16 @@ public class DataInitializer implements ApplicationRunner {
                 newStatus.setName(status);
                 newStatus.setSlug(status.toLowerCase());
                 taskStatusRepository.save(newStatus);
+            }
+        }
+    }
+    private void createStartLabels() {
+        List<String> initialLabels = List.of("feature", "bug");
+        for (String label: initialLabels) {
+            if (!labelRepository.existsByName(label)) {
+                Label newLabel = new Label();
+                newLabel.setName(label);
+                labelRepository.save(newLabel);
             }
         }
     }
