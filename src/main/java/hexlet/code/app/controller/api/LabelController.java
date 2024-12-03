@@ -1,12 +1,11 @@
-package hexlet.code.app.controlller.api;
+package hexlet.code.app.controller.api;
 
-import hexlet.code.app.dto.task.TaskCreateDTO;
-import hexlet.code.app.dto.task.TaskDTO;
-import hexlet.code.app.dto.task.TaskUpdateDTO;
-import hexlet.code.app.service.TaskService;
+import hexlet.code.app.dto.label.LabelCreateDTO;
+import hexlet.code.app.dto.label.LabelDTO;
+import hexlet.code.app.dto.label.LabelUpdateDTO;
+import hexlet.code.app.service.LabelService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,46 +21,44 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/labels")
 @RequiredArgsConstructor
-public class TaskController {
+public class LabelController {
 
-    @Autowired
-    private TaskService taskService;
+    private final LabelService labelService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<TaskDTO>> getAllTasks() {
-        List<TaskDTO> tasks = taskService.getAllTasks();
+    public ResponseEntity<List<LabelDTO>> getAllLabels() {
+        List<LabelDTO> labels = labelService.getAllLabels();
         return ResponseEntity.ok()
-                .header("X-Total-Count", String.valueOf(tasks.size()))
-                .body(tasks);
+                .header("X-Total-Count", String.valueOf(labels.size()))
+                .body(labels);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TaskDTO getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id);
+    public LabelDTO getLabelById(@PathVariable Long id) {
+        return labelService.getLabelById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskDTO createTask(@Valid @RequestBody TaskCreateDTO taskCreateDTO) {
-        return taskService.createTask(taskCreateDTO);
+    public LabelDTO createLabel(@RequestBody LabelCreateDTO labelCreateDTO) {
+        return labelService.createLabel(labelCreateDTO);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TaskDTO updateTask(
+    public LabelDTO updateLabel(
             @PathVariable Long id,
-            @Valid @RequestBody TaskUpdateDTO taskUpdateDTO
-    ) {
-        return taskService.updateTask(id, taskUpdateDTO);
+            @Valid @RequestBody LabelUpdateDTO labelUpdateDTO) {
+        return labelService.updateLabel(id, labelUpdateDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    public void deleteLabel(@PathVariable Long id) {
+        labelService.deleteLabel(id);
     }
 }

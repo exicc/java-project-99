@@ -5,9 +5,11 @@ import hexlet.code.app.dto.task.TaskDTO;
 import hexlet.code.app.dto.task.TaskUpdateDTO;
 import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskMapper;
+import hexlet.code.app.model.Label;
 import hexlet.code.app.model.Task;
 import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.model.User;
+import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
@@ -15,18 +17,23 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
 
-    private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+
+    private final TaskRepository taskRepository;
 
     private final TaskStatusRepository taskStatusRepository;
 
     private final UserRepository userRepository;
+
+    private final LabelRepository labelRepository;
 
     public List<TaskDTO> getAllTasks() {
         List<Task> tasks = taskRepository.findAll();
@@ -51,6 +58,11 @@ public class TaskService {
                 .orElseThrow(() -> new EntityNotFoundException("User with id "
                         + taskCreateDTO.getAssigneeId() + " not found"));
 
+        if (taskCreateDTO.getLabelIds() != null) {
+            Set<Label> labels = new HashSet<>(labelRepository.findAllById(taskCreateDTO.getLabelIds()));
+            task.setLabels(labels);
+        }
+
         task.setTaskStatus(taskStatus);
         task.setAssignee(assignee);
         task = taskRepository.save(task);
@@ -63,6 +75,12 @@ public class TaskService {
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
 
         taskMapper.partialUpdate(taskUpdateDTO, task);
+
+        if (taskUpdateDTO.getLabelIds() != null && taskUpdateDTO.getLabelIds().isPresent()) {
+            Set<Label> labels = new HashSet<>(labelRepository.findAllById(taskUpdateDTO.getLabelIds().get()));
+            task.setLabels(labels);
+        }
+
         task = taskRepository.save(task);
         return taskMapper.toDTO(task);
     }
@@ -74,4 +92,3 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 }
-

@@ -35,6 +35,7 @@ public interface TaskMapper {
     @Mapping(target = "description", source = "content")
     @Mapping(target = "taskStatus.id", source = "taskStatusId")
     @Mapping(target = "assignee.id", source = "assigneeId")
+    @Mapping(target = "labels", ignore = true)
     Task toEntity(TaskCreateDTO taskCreateDTO);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -44,5 +45,6 @@ public interface TaskMapper {
             expression = "java(taskUpdateDTO.getIndex() != null ? taskUpdateDTO.getIndex().orElse(null) : null)")
     @Mapping(target = "taskStatus", ignore = true)
     @Mapping(target = "assignee", ignore = true)
+    @Mapping(target = "labels", ignore = true)
     void partialUpdate(TaskUpdateDTO taskUpdateDTO, @MappingTarget Task task);
 }
