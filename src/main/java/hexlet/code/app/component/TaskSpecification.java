@@ -20,12 +20,13 @@ public class TaskSpecification {
 
     private Specification<Task>  withTitleCont(String title) {
         return (root, query, cb) ->
-                title == null ? cb.conjunction() : cb.like(cb.lower(root.get("name")), title);
+                title == null ? cb.conjunction()
+                        : cb.like(cb.lower(root.get("name")), "%" + title.toLowerCase() + "%");
     }
 
     private Specification<Task> withAssigneeId(Long assigneeId) {
         return (root, query, cb) ->
-                assigneeId == null ? cb.conjunction() : cb.equal(root.get("author").get("id"), assigneeId);
+                assigneeId == null ? cb.conjunction() : cb.equal(root.get("assignee").get("id"), assigneeId);
     }
 
     private Specification<Task> withStatus(String slug) {

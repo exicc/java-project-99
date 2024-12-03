@@ -1,5 +1,6 @@
 package hexlet.code.app.model;
 
+import hexlet.code.app.repository.LabelRepository;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -54,7 +56,20 @@ public class Task implements BaseEntity {
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "label_id")
     )
-    private Set<Label> labels;
+    private Set<Label> labels = new HashSet<>();
+
+    public void setLabelIds(Set<Long> labelIds, LabelRepository labelRepository) {
+        if (labelIds == null || labelIds.isEmpty()) {
+            this.labels.clear();
+            return;
+        }
+
+        this.labels = new HashSet<>(labelRepository.findAllById(labelIds));
+    }
+
+    public void addLabel(Label label) {
+        this.labels.add(label);
+    }
 
     @CreatedDate
     private LocalDateTime createdAt;
