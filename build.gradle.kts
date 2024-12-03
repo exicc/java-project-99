@@ -55,6 +55,9 @@ dependencies {
 	implementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
 	implementation("net.datafaker:datafaker:2.0.2")
 
+	//implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+
+
 	runtimeOnly ("org.postgresql:postgresql")
 	runtimeOnly ("com.h2database:h2")
 }
