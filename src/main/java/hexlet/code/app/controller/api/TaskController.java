@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,11 +46,17 @@ public class TaskController {
     private TaskMapper taskMapper;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Page<TaskDTO> getAllTasks(TaskParamsDTO params, @RequestParam(defaultValue = "1") int page) {
+    public ResponseEntity<Page<TaskDTO>> getAllTasks(TaskParamsDTO params, @RequestParam(defaultValue = "1") int page) {
         var spec = specBuilder.build(params);
         var tasks = repository.findAll(spec, PageRequest.of(page - 1, 10));
-        return tasks.map(taskMapper::toDTO);
+
+        var headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(tasks.getTotalElements()));
+
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(tasks.map(taskMapper::toDTO));
     }
 
     @GetMapping("/{id}")

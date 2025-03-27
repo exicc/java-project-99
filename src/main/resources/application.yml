@@ -4,8 +4,9 @@ logging:
     root: WARN
     org:
       springframework:
-        # web: DEBUG
+        web: DEBUG
         security: DEBUG
+      # hibernate.SQL: DEBUG
 
 spring:
   profiles:
@@ -20,3 +21,12 @@ spring:
 server:
   address: 0.0.0.0
   port: 8080
+
+sentry:
+  dsn: https://f045911896eec361a3e634a6a020fab5@o4508596286193664.ingest.de.sentry.io/4509050206027856
+  send-default-pii: true
+  exception-resolver-order: -2147483647
+  logging:
+    minimum-breadcrumb-level: debug
+    minimum-event-level: info
+  debug: true

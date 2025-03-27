@@ -51,7 +51,6 @@ public class TaskFiltrationTest {
 
     private Long userId;
     private Long labelId;
-    private Long taskStatusId;
 
 
     @BeforeEach
@@ -72,7 +71,7 @@ public class TaskFiltrationTest {
         TaskStatus taskStatus = taskStatusRepository.getBySlug(slug)
                 .orElseThrow(() -> new EntityNotFoundException("Task status with slug "
                         + slug + " not found."));
-        taskStatusId = taskStatus.getId();
+
 
         Label label = new Label();
         label.setName("label");
