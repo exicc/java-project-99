@@ -4,6 +4,7 @@ import hexlet.code.app.model.Label;
 import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.model.User;
 import hexlet.code.app.repository.LabelRepository;
+import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.service.CustomUserDetailsService;
@@ -29,6 +30,9 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     private final LabelRepository labelRepository;
 
     @Override
@@ -43,6 +47,7 @@ public class DataInitializer implements ApplicationRunner {
         var user = userRepository.findByEmail(email);
 
         if (user.isPresent()) {
+            taskRepository.deleteAllByAssigneeId(user.get().getId());
             userRepository.deleteAllByEmailSQL(email);
         }
         var userData = new User();

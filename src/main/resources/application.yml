@@ -4,7 +4,7 @@ logging:
     root: WARN
     org:
       springframework:
-        web: DEBUG
+        # web: DEBUG
         security: DEBUG
       # hibernate.SQL: DEBUG
 

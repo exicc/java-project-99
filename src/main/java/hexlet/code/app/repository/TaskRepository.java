@@ -9,4 +9,5 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
     boolean existsByTaskStatusId(Long statusID);
     Task findByName(String name);
     Task findByIndex(Integer index);
+    void deleteAllByAssigneeId(Long userID);
 }
